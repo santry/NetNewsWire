@@ -19,7 +19,7 @@ struct AddWebFeedView: View {
     var body: some View {
 		#if os(iOS)
 			iosForm
-				.onAppear {
+				.task {
 					viewModel.pasteUrlFromPasteboard()
 				}
 				.onReceive(viewModel.$shouldDismiss, perform: { dismiss in
@@ -29,7 +29,7 @@ struct AddWebFeedView: View {
 				})
 		#else
 			macForm
-				.onAppear {
+				.task {
 					viewModel.pasteUrlFromPasteboard()
 				}.alert(isPresented: $viewModel.showError) {
 					Alert(title: Text("Oops"),
@@ -63,11 +63,11 @@ struct AddWebFeedView: View {
 			LazyVGrid(columns: [GridItem(.fixed(75), spacing: 10, alignment: .trailing),GridItem(.fixed(400), spacing: 0, alignment: .leading) ], alignment: .leading, spacing: 10, pinnedViews: [], content:{
 				Text("URL:").bold()
 				urlTextField
-					.textFieldStyle(RoundedBorderTextFieldStyle())
+					.textFieldStyle(.roundedBorder)
 					.help("The URL of the feed you want to add.")
 				Text("Name:").bold()
 				providedNameTextField
-					.textFieldStyle(RoundedBorderTextFieldStyle())
+					.textFieldStyle(.roundedBorder)
 					.help("The name of the feed. (Optional.)")
 				Text("Folder:").bold()
 				folderPicker
@@ -88,7 +88,7 @@ struct AddWebFeedView: View {
 				providedNameTextField
 				folderPicker
 			}
-			.listStyle(InsetGroupedListStyle())
+			.listStyle(.inset)
 			.navigationBarTitle("Add Web Feed")
 			.navigationBarTitleDisplayMode(.inline)
 			.navigationBarItems(leading:

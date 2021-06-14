@@ -19,7 +19,6 @@ struct AccountsPreferencesView: View {
 		VStack {
 			HStack(alignment: .top, spacing: 10) {
 				listOfAccounts
-				
 				AccountDetailView(viewModel: viewModel)
 				.frame(height: 300, alignment: .leading)
 			}
@@ -66,6 +65,7 @@ struct AccountsPreferencesView: View {
 				  }))
 		})
 	}
+
 	
 	var listOfAccounts: some View {
 		VStack(alignment: .leading) {
@@ -95,7 +95,7 @@ struct AccountsPreferencesView: View {
 									.foregroundColor(hoverOnAdd ? Color.gray.opacity(0.1) : Color.clear))
 						.padding(4)
 				})
-				.buttonStyle(BorderlessButtonStyle())
+					.buttonStyle(.borderless)
 				.onHover { hovering in
 					hoverOnAdd = hovering
 				}
@@ -111,7 +111,7 @@ struct AccountsPreferencesView: View {
 									.foregroundColor(hoverOnRemove ? Color.gray.opacity(0.1) : Color.clear))
 						.padding(4)
 				})
-				.buttonStyle(BorderlessButtonStyle())
+					.buttonStyle(.borderless)
 				.onHover { hovering in
 					hoverOnRemove = hovering
 				}

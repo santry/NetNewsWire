@@ -26,13 +26,13 @@ struct MainApp: App {
 		#if os(macOS)
 		WindowGroup {
 			SceneNavigationView()
-				.frame(minWidth: 600, idealWidth: 1000, maxWidth: .infinity, minHeight: 600, idealHeight: 700, maxHeight: .infinity)
-				.onAppear { refreshProgress.startup() }
+				.frame(minWidth: 600, idealWidth: 1000, maxWidth: .infinity, minHeight: 300, idealHeight: 700, maxHeight: .infinity)
+				.task { refreshProgress.startup() }
 				.environmentObject(refreshProgress)
 				.environmentObject(defaults)
 				.preferredColorScheme(AppDefaults.userInterfaceColorScheme)
 		}
-		.windowToolbarStyle(UnifiedWindowToolbarStyle())
+		.windowToolbarStyle(.unified)
 		.commands {
 			SidebarCommands()
 			CommandGroup(after: .newItem, addition: {
@@ -125,7 +125,7 @@ struct MainApp: App {
 		#if os(iOS)
 		WindowGroup {
 			SceneNavigationView()
-				.onAppear { refreshProgress.startup() }
+				.task { refreshProgress.startup() }
 				.environmentObject(refreshProgress)
 				.environmentObject(defaults)
 				.preferredColorScheme(AppDefaults.userInterfaceColorScheme)

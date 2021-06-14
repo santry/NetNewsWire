@@ -42,7 +42,7 @@ struct EditAccountCredentialsView: View {
 						TextField("API URL", text: $editModel.apiUrl)
 					}
 				}
-			}.textFieldStyle(RoundedBorderTextFieldStyle())
+			}.textFieldStyle(.roundedBorder)
 			
 			Spacer()
 			HStack{
@@ -64,7 +64,7 @@ struct EditAccountCredentialsView: View {
 				}
 				
 			}
-		}.onAppear {
+		}.task {
 			editModel.retrieveCredentials(viewModel.account!)
 		}
 		.onChange(of: editModel.accountCredentialsWereUpdated) { value in

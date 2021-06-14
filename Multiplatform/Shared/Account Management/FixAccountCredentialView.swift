@@ -19,7 +19,7 @@ struct FixAccountCredentialView: View {
     var body: some View {
 		#if os(macOS)
 		MacForm
-			.onAppear {
+			.task {
 				editModel.retrieveCredentials(accountSyncError.account)
 			}
 			.onChange(of: editModel.accountCredentialsWereUpdated) { value in
@@ -39,7 +39,7 @@ struct FixAccountCredentialView: View {
 			.padding()
 		#else
 		iOSForm
-			.onAppear {
+			.task {
 				editModel.retrieveCredentials(accountSyncError.account)
 			}
 			.onChange(of: editModel.accountCredentialsWereUpdated) { value in
@@ -76,7 +76,7 @@ struct FixAccountCredentialView: View {
 					accountFields
 				}
 			}
-			.textFieldStyle(RoundedBorderTextFieldStyle())
+			.textFieldStyle(.roundedBorder)
 			
 			Spacer()
 			HStack{
@@ -99,7 +99,7 @@ struct FixAccountCredentialView: View {
 					accountFields
 				})
 			}
-			.listStyle(InsetGroupedListStyle())
+			.listStyle(.inset)
 			.navigationBarItems(
 				leading:
 					cancelButton
