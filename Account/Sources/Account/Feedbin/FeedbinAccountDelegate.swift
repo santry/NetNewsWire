@@ -85,8 +85,7 @@ final class FeedbinAccountDelegate: AccountDelegate {
 		
 		refreshAccount(account) { result in
 			switch result {
-			case .success():
-
+            case .success():
 				self.refreshArticlesAndStatuses(account) { result in
 					switch result {
 					case .success():
@@ -107,11 +106,34 @@ final class FeedbinAccountDelegate: AccountDelegate {
 					completion(.failure(wrappedError))
 				}
 			}
-			
 		}
-		
 	}
 
+    @available(macOS 12, iOS 15, *)
+    func refreshAll(for account: Account) async throws {
+        refreshProgress.addToNumberOfTasksAndRemaining(5)
+        
+        return try await withUnsafeThrowingContinuation { continuation in
+            refreshAccount(account) { result in
+                switch result {
+                case .success():
+                    self.refreshArticlesAndStatuses(account) { result in
+                        switch result {
+                        case .success():
+                            continuation.resume()
+                        case .failure(let error):
+                            self.refreshProgress.clear()
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                case .failure(let err):
+                    self.refreshProgress.clear()
+                    continuation.resume(throwing: err)
+                }
+            }
+        }
+    }
+    
 	func syncArticleStatus(for account: Account, completion: ((Result<Void, Error>) -> Void)? = nil) {
 		sendArticleStatus(for: account) { result in
 			switch result {

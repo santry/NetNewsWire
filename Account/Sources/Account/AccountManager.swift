@@ -12,6 +12,7 @@ import RSWeb
 import Articles
 import ArticlesDatabase
 
+
 // Main thread only.
 
 public final class AccountManager: UnreadCountProvider {
@@ -292,6 +293,15 @@ public final class AccountManager: UnreadCountProvider {
 		}
 		
 	}
+    
+    /// Asyncronous refresh of all accounts.
+    @available(macOS 12, iOS 15, *)
+    public func refreshAll() async throws {
+        for account in activeAccounts {
+            try await account.refreshAll()
+        }
+    }
+    
 
 	public func sendArticleStatusAll(completion: (() -> Void)? = nil) {
 		let group = DispatchGroup()
